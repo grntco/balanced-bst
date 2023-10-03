@@ -10,6 +10,34 @@ class Tree {
     constructor(array) {
         this.root = buildTree(array);
     }
+
+    insert(value) {
+        const node = new Node(value);
+        const root = this.root;
+
+        if (!root) {
+            root = node;
+            return;
+        }
+
+        let prev = null;
+        let temp = root;
+        while (temp) {
+            if (node.data < temp.data) {
+                prev = temp;
+                temp = temp.left;
+            } else {
+                prev = temp;
+                temp = temp.right;
+            }
+        }
+
+        if (node.data < prev.data) {
+            prev.left = node;
+        } else if (node.data > prev.data) {
+            prev.right = node;
+        }
+    }
 }
 
 function buildTree(array) {
@@ -33,8 +61,8 @@ function buildTree(array) {
     return createNode(sortArray(array));
 }
 
-// const globalArray = [1, 2, 3, 4, 5];
-const globalArray = [1, 9, 3, 2, 4, 6, 5, 8, 7];
+const globalArray = [1, 2, 3, 4, 6];
+// const globalArray = [1, 9, 3, 2, 4, 6, 5, 8, 7];
 // const globalArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const BST = new Tree(globalArray);
 
@@ -52,4 +80,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
+
+prettyPrint(BST.root);
+BST.insert(5)
 prettyPrint(BST.root);
