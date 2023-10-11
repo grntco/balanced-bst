@@ -70,6 +70,19 @@ class Tree {
         }
         return root;
     }
+
+    find(value) {
+        return this._findRec(this.root, value)
+    }
+
+    _findRec(root, value) {
+        if (value < root.data) {
+            root = this._findRec(root.left, value);
+        } else if (value > root.data) {
+            root = this._findRec(root.right, value);
+        }
+        return root;
+    }
  }
 
 function buildTree(array) {
@@ -114,5 +127,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 
 prettyPrint(BST.root);
-BST.delete(3)
-prettyPrint(BST.root);
+// BST.delete(3)
+// prettyPrint(BST.root);
+console.log(BST.find(6));
