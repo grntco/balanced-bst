@@ -38,7 +38,39 @@ class Tree {
             prev.right = node;
         }
     }
-}
+
+    delete(value) {
+        this.root = this._deleteRec(this.root, value);
+    }
+
+    _deleteRec(root, value) {
+        if (root === null) return root;
+
+        if (value < root.data) {
+            root.left = this._deleteRec(root.left, value);
+        } else if (value > root.data) {
+            root.right = this._deleteRec(root.right, value);
+        } else { // if equal
+
+            // one child or no child
+            if (root.left === null) {
+                return root.right;
+            } else if (root.right === null) {
+                return root.left;
+            }
+
+            // two children
+            let minValueNode = root.right;
+            while(minValueNode.left !== null) {
+                minValueNode = minValueNode.left;
+            }
+
+            root.data = minValueNode.data;
+            root.right = this._deleteRec(root.right, minValueNode.data)
+        }
+        return root;
+    }
+ }
 
 function buildTree(array) {
 
@@ -61,7 +93,7 @@ function buildTree(array) {
     return createNode(sortArray(array));
 }
 
-const globalArray = [1, 2, 3, 4, 6];
+const globalArray = [1, 2, 3, 4, 5, 6];
 // const globalArray = [1, 9, 3, 2, 4, 6, 5, 8, 7];
 // const globalArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const BST = new Tree(globalArray);
@@ -82,5 +114,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 
 prettyPrint(BST.root);
-BST.insert(5)
+BST.delete(3)
 prettyPrint(BST.root);
