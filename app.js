@@ -40,36 +40,39 @@ class Tree {
     }
 
     delete(value) {
-        this.root = this._deleteRec(this.root, value);
-    }
 
-    _deleteRec(root, value) {
-        if (root === null) return root;
-
-        if (value < root.data) {
-            root.left = this._deleteRec(root.left, value);
-        } else if (value > root.data) {
-            root.right = this._deleteRec(root.right, value);
-        } else { // if equal
-
-            // one child or no child
-            if (root.left === null) {
-                return root.right;
-            } else if (root.right === null) {
-                return root.left;
+        const _deleteRec = function(root, value) {
+            if (root === null) return root;
+    
+            if (value < root.data) {
+                root.left = _deleteRec(root.left, value);
+            } else if (value > root.data) {
+                root.right = _deleteRec(root.right, value);
+            } else { // if equal
+    
+                // one child or no child
+                if (root.left === null) {
+                    return root.right;
+                } else if (root.right === null) {
+                    return root.left;
+                }
+    
+                // two children
+                let minValueNode = root.right;
+                while(minValueNode.left !== null) {
+                    minValueNode = minValueNode.left;
+                }
+    
+                root.data = minValueNode.data;
+                root.right = _deleteRec(root.right, minValueNode.data)
             }
-
-            // two children
-            let minValueNode = root.right;
-            while(minValueNode.left !== null) {
-                minValueNode = minValueNode.left;
-            }
-
-            root.data = minValueNode.data;
-            root.right = this._deleteRec(root.right, minValueNode.data)
+            return root;
         }
-        return root;
+
+        this.root = _deleteRec(this.root, value);
     }
+
+
 
     find(value) {
 
@@ -174,10 +177,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 
 prettyPrint(BST.root);
-// BST.delete(3)
-// prettyPrint(BST.root);
+BST.delete(5)
+prettyPrint(BST.root);
 
-function logData(node) {
-    console.log(node.data)
-}
-console.log(BST.find(3));
+// function logData(node) {
+//     console.log(node.data)
+// }
+// console.log(BST.find(3));
