@@ -72,18 +72,21 @@ class Tree {
     }
 
     find(value) {
-        return this._findRec(this.root, value)
+
+        const _findRec = function(root, value) {
+            if (value < root.data) {
+                root = _findRec(root.left, value);
+            } else if (value > root.data) {
+                root = _findRec(root.right, value);
+            }
+            
+            return root;
+        }
+
+        return _findRec(this.root, value)
     }
 
-    _findRec(root, value) {
-        if (value < root.data) {
-            root = this._findRec(root.left, value);
-        } else if (value > root.data) {
-            root = this._findRec(root.right, value);
-        }
-        
-        return root;
-    }
+
 
 
     levelOrder(func) {
@@ -105,6 +108,26 @@ class Tree {
             if (temp.right !== null) queue.push(temp.right);
         }
 
+        if (!func) return values;
+    }
+
+    preOrder(func) {
+        const values = [];
+
+        const _preOrderRec = function(root) {
+            if (root === null) return;
+
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data);
+            }
+    
+            _preOrderRec(root.left);
+            _preOrderRec(root.right);
+        };
+
+        _preOrderRec(this.root);
         if (!func) return values;
     }
  }
@@ -157,4 +180,4 @@ prettyPrint(BST.root);
 function logData(node) {
     console.log(node.data)
 }
-BST.levelOrder(logData);
+console.log(BST.find(3));
