@@ -81,7 +81,31 @@ class Tree {
         } else if (value > root.data) {
             root = this._findRec(root.right, value);
         }
+        
         return root;
+    }
+
+
+    levelOrder(func) {
+        if (this.root === null) return [];
+        
+        let queue = [this.root];
+        let values = [];
+
+        while (queue.length !== 0) {
+            let temp = queue.shift();
+
+            if (func) {
+                func(temp);
+            } else {
+                values.push(temp.data);
+            }
+
+            if (temp.left !== null) queue.push(temp.left);
+            if (temp.right !== null) queue.push(temp.right);
+        }
+
+        if (!func) return values;
     }
  }
 
@@ -129,4 +153,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 prettyPrint(BST.root);
 // BST.delete(3)
 // prettyPrint(BST.root);
-console.log(BST.find(6));
+
+function logData(node) {
+    console.log(node.data)
+}
+BST.levelOrder(logData);
