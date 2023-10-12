@@ -169,6 +169,31 @@ class Tree {
         _postOrderRec(this.root);
         if (!func) return values;
     }
+
+    height(node) {
+        if (node === null) return 0;    
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
+    }
+
+    depth(node) {
+        let level = 0;
+        let temp = this.root;
+
+        while (node !== null) {
+
+            if (node.data === temp.data) {
+                return level;
+            } else if (node.data < temp.data) {
+                temp = temp.left;
+            } else {
+                temp = temp.right;
+            }
+
+            level++;
+        }
+
+        return -1; // node not in tree
+    }
  }
 
 function buildTree(array) {
@@ -219,4 +244,4 @@ prettyPrint(BST.root);
 function logData(node) {
     console.log(node.data)
 }
-BST.postOrder(logData);
+console.log(BST.depth(BST.root));
