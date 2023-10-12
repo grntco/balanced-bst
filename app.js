@@ -72,8 +72,6 @@ class Tree {
         this.root = _deleteRec(this.root, value);
     }
 
-
-
     find(value) {
 
         const _findRec = function(root, value) {
@@ -88,9 +86,6 @@ class Tree {
 
         return _findRec(this.root, value)
     }
-
-
-
 
     levelOrder(func) {
         if (this.root === null) return [];
@@ -131,6 +126,47 @@ class Tree {
         };
 
         _preOrderRec(this.root);
+        if (!func) return values;
+    }
+
+    inOrder(func) {
+        const values = [];
+
+        const _inOrderRec = function(root) {
+            if (root === null) return;
+
+            _inOrderRec(root.left);
+
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data);
+            }
+
+            _inOrderRec(root.right);
+        }
+
+        _inOrderRec(this.root);
+        if (!func) return values;
+    }
+
+    postOrder(func) {
+        const values = [];
+
+        const _postOrderRec = function(root) {
+            if (root === null) return;
+
+            _postOrderRec(root.left);
+            _postOrderRec(root.right);
+
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data);
+            }
+        }
+
+        _postOrderRec(this.root);
         if (!func) return values;
     }
  }
@@ -177,10 +213,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 
 prettyPrint(BST.root);
-BST.delete(5)
-prettyPrint(BST.root);
+// BST.delete(5)
+// prettyPrint(BST.root);
 
-// function logData(node) {
-//     console.log(node.data)
-// }
-// console.log(BST.find(3));
+function logData(node) {
+    console.log(node.data)
+}
+BST.postOrder(logData);
