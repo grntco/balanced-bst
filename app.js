@@ -12,31 +12,22 @@ class Tree {
     }
 
     insert(value) {
-        const node = new Node(value);
-        const root = this.root;
-
-        if (!root) {
-            root = node;
-            return;
-        }
-
-        let prev = null;
-        let temp = root;
-        while (temp) {
-            if (node.data < temp.data) {
-                prev = temp;
-                temp = temp.left;
-            } else {
-                prev = temp;
-                temp = temp.right;
+        const _insertRec = function(root, value) {
+            if (root === null) {
+                const newNode = new Node(value);
+                return newNode;
             }
+
+            if (value < root.data) {
+                root.left = _insertRec(root.left, value);
+            } else if (value > root.data) {
+                root.right = _insertRec(root.right, value);
+            }
+
+            return root;
         }
 
-        if (node.data < prev.data) {
-            prev.left = node;
-        } else if (node.data > prev.data) {
-            prev.right = node;
-        }
+        return _insertRec(this.root, value);
     }
 
     delete(value) {
@@ -212,6 +203,7 @@ class Tree {
     }
  }
 
+// Build the tree
 function buildTree(array) {
 
     function sortArray(array) {
@@ -233,10 +225,7 @@ function buildTree(array) {
     return createNode(sortArray(array));
 }
 
-
-
-
-
+// Function provided by The Odin Project to visualize the BST
 const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -250,23 +239,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
-
-// prettyPrint(BST.root);
-// BST.insert(33)
-// BST.insert(550)
-// BST.insert(5000)
-// BST.insert(500)
-// prettyPrint(BST.root);
-
-// function logData(node) {
-//     console.log(node.data)
-// }
-// BST.rebalance();
-// prettyPrint(BST.root);
-
-// "Tests" 
-
-function getRandomArray(length) {
+// Generate an array of random integers
+const getRandomArray = function(length) {
     let array = [];
     for (let i = 0; i < length; i++) {
         array.push(Math.floor(Math.random() * 100))
@@ -274,6 +248,10 @@ function getRandomArray(length) {
     return array;
 }
 
+
+// Console.log "tests"
+
+// Create the tree
 const BST = new Tree(getRandomArray(10));
 prettyPrint(BST.root);
 console.log('Is the tree balanced?', BST.isBalanced() ? 'Yes' : 'False'); // 'Yes'
