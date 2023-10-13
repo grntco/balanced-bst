@@ -1,5 +1,5 @@
 # Balanced Binary Search Tree
-This is a project for [The Odin Project](https://www.theodinproject.com/lessons/javascript-binary-search-trees#assignment) to build a balanced binary search tree (BST) with various methods (listed below).
+This is a project for [The Odin Project](https://www.theodinproject.com/lessons/javascript-binary-search-trees) to build a balanced binary search tree (BST) with various methods (listed below).
 
 The JS file includes two classes, `Node`, which is used to create the individual nodes of the tree, and `Tree`, which is used to create a tree. 
 
