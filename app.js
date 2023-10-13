@@ -198,8 +198,8 @@ class Tree {
     }
 
     rebalance() {
-        const resorted = this.inOrder();
-        this.root = buildTree(resorted); 
+        const resortedArray = this.inOrder();
+        this.root = buildTree(resortedArray); 
     }
  }
 
