@@ -233,10 +233,8 @@ function buildTree(array) {
     return createNode(sortArray(array));
 }
 
-const globalArray = [1, 2, 3, 4, 5, 6, 10, 20, 30];
-// const globalArray = [1, 9, 3, 2, 4, 6, 5, 8, 7];
-// const globalArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const BST = new Tree(globalArray);
+
+
 
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -253,15 +251,52 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   };
 
 
-prettyPrint(BST.root);
-BST.insert(33)
-BST.insert(550)
-BST.insert(5000)
-BST.insert(500)
-prettyPrint(BST.root);
+// prettyPrint(BST.root);
+// BST.insert(33)
+// BST.insert(550)
+// BST.insert(5000)
+// BST.insert(500)
+// prettyPrint(BST.root);
 
-function logData(node) {
-    console.log(node.data)
+// function logData(node) {
+//     console.log(node.data)
+// }
+// BST.rebalance();
+// prettyPrint(BST.root);
+
+// "Tests" 
+
+function getRandomArray(length) {
+    let array = [];
+    for (let i = 0; i < length; i++) {
+        array.push(Math.floor(Math.random() * 100))
+    }
+    return array;
 }
+
+const BST = new Tree(getRandomArray(10));
+prettyPrint(BST.root);
+console.log('Is the tree balanced?', BST.isBalanced() ? 'Yes' : 'False'); // 'Yes'
+console.log('Level Order: ' + BST.levelOrder().join(', '));
+console.log('Preorder: ' + BST.preOrder().join(', '));
+console.log('Inorder: ' + BST.inOrder().join(', '));
+console.log('Postorder: ' + BST.postOrder().join(', '));
+
+// Unbalance the tree
+BST.insert(140);
+BST.insert(120);
+BST.insert(110);
+BST.insert(130);
+prettyPrint(BST.root);
+console.log('Is the tree balanced?', BST.isBalanced() ? 'Yes' : 'No'); // 'No'
+
+// Rebalance the tree
 BST.rebalance();
 prettyPrint(BST.root);
+console.log('Is the tree balanced?', BST.isBalanced() ? 'Yes' : 'False'); // 'Yes'
+console.log('Level Order: ' + BST.levelOrder().join(', '));
+console.log('Preorder: ' + BST.preOrder().join(', '));
+console.log('Inorder: ' + BST.inOrder().join(', '));
+console.log('Postorder: ' + BST.postOrder().join(', '));
+
+
