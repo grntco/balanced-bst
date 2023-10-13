@@ -194,6 +194,22 @@ class Tree {
 
         return -1; // node not in tree
     }
+
+    isBalanced() {
+        const leftHeight = this.height(this.root.left);
+        const rightHeight = this.height(this.root.right);
+
+        if (leftHeight === rightHeight || leftHeight + 1 === rightHeight || leftHeight - 1 === rightHeight) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    rebalance() {
+        const resorted = this.inOrder();
+        this.root = buildTree(resorted); 
+    }
  }
 
 function buildTree(array) {
@@ -217,7 +233,7 @@ function buildTree(array) {
     return createNode(sortArray(array));
 }
 
-const globalArray = [1, 2, 3, 4, 5, 6];
+const globalArray = [1, 2, 3, 4, 5, 6, 10, 20, 30];
 // const globalArray = [1, 9, 3, 2, 4, 6, 5, 8, 7];
 // const globalArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const BST = new Tree(globalArray);
@@ -238,10 +254,14 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 
 prettyPrint(BST.root);
-// BST.delete(5)
-// prettyPrint(BST.root);
+BST.insert(33)
+BST.insert(550)
+BST.insert(5000)
+BST.insert(500)
+prettyPrint(BST.root);
 
 function logData(node) {
     console.log(node.data)
 }
-console.log(BST.depth(BST.root));
+BST.rebalance();
+prettyPrint(BST.root);
